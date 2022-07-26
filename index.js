@@ -1,19 +1,10 @@
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { ApolloServer } from 'apollo-server-express';
-import { ApolloServerPluginDrainHttpServer, gql } from 'apollo-server-core';
 import express from 'express';
 import http from 'http';
-import { categories, products } from './mockdata/index.js'
+import { Category, Product, Query } from './resolvers/index.js';
 import { typeDefs } from './schema.js';
-import { Query, Category, Product } from './resolvers/index.js'
-
-const resolvers = {
-
-    //category is the link
-
-    //what is we want a list of produsct, with its category
-
-}
-
+import { products, categories, reviews } from './mockdata/index.js'
 
 async function startApolloServer(typeDefs, resolvers) {
     const app = express();
@@ -23,9 +14,14 @@ async function startApolloServer(typeDefs, resolvers) {
     const server = new ApolloServer({
         typeDefs,
         resolvers: {
-            Query:Query,
-            Category:Category,
-            Product:Product
+            Query: Query,
+            Category: Category,
+            Product: Product
+        },
+        context: {
+            products,
+            categories,
+            reviews
         },
         plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     });
@@ -34,9 +30,9 @@ async function startApolloServer(typeDefs, resolvers) {
 
     server.applyMiddleware({ app });
 
-    await new Promise(resolve => httpServer.listen({ port: 4000 }, resolve));
+    await new Promise(resolve => httpServer.listen({ port: 4001 }, resolve));
 
-    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+    console.log(`🚀 Server ready at http://localhost:4001${server.graphqlPath}`);
 }
 
-startApolloServer(typeDefs, resolvers);
+startApolloServer(typeDefs);
