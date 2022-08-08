@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-core'
 const typeDefs = gql`
 type Query{
     hello:String!
-    products:[Product!]
+    products(filter:ProductFilterInput):[Product!]
     product(id:String!):Product
     categories:[Category!]!
     category(id:ID!): Category
@@ -24,7 +24,7 @@ type Product{
 type Category{
     id:ID!
     name:String!
-    products:[Product!]! 
+    products(filter:ProductFilterInput):[Product!]! 
 }
 
 type Review{
@@ -37,8 +37,14 @@ type Review{
 
 }
 
+input ProductFilterInput{
+    onSale:Boolean
+    avgRating:Int 
+}
+
 `
 
 // notice we dont add productId to Review schema type since it is not necessary
+// input use for filtering the query
 
 export { typeDefs };
