@@ -1,13 +1,13 @@
 
 const Category = {
-    products: (parent, { filter }, { products }) => {
+    products: (parent, { filter }, { db }) => {
         const categoryId = parent.id
 
         let productByCategory = null;
 
         if (!filter) {
 
-            productByCategory = products.filter(product => product.categoryId === categoryId)
+            productByCategory = db.products.filter(product => product.categoryId === categoryId)
             return productByCategory
         }
 

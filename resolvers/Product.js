@@ -1,9 +1,9 @@
 const Product = {
-    category: (parent, args, { categories }) => {
-        return categories.find(el => el.id === parent.categoryId)
+    category: (parent, args, { db }) => {
+        return db.categories.find(el => el.id === parent.categoryId)
     },
-    reviews: ({ id }, args, { reviews }) => {
-        return reviews.filter(el => el.productId === id)
+    reviews: ({ id }, args, { db }) => {
+        return db.reviews.filter(el => el.productId === id)
     }
 }
 

@@ -2,9 +2,9 @@ import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import http from 'http';
-import { Category, Product, Query } from './resolvers/index.js';
+import { Category, Product, Query, Mutation } from './resolvers/index.js';
 import { typeDefs } from './schema.js';
-import { products, categories, reviews } from './mockdata/index.js'
+import { db } from './mockdata/index.js'
 
 async function startApolloServer(typeDefs, resolvers) {
     const app = express();
@@ -16,12 +16,11 @@ async function startApolloServer(typeDefs, resolvers) {
         resolvers: {
             Query: Query,
             Category: Category,
-            Product: Product
+            Product: Product,
+            Mutation            
         },
         context: {
-            products,
-            categories,
-            reviews
+            db
         },
         plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     });

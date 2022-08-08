@@ -9,6 +9,12 @@ type Query{
     category(id:ID!): Category
 }
 
+type Mutation{
+    addCategory(input:AddCategoryInput!): Category!
+    addProduct(input:AddProductInput!): Product!
+    deleteCategory(id: ID!):Boolean!
+}
+
 type Product{
     id:String!
     name:String!
@@ -40,6 +46,21 @@ type Review{
 input ProductFilterInput{
     onSale:Boolean
     avgRating:Int 
+}
+
+input AddCategoryInput{
+    name:String!
+}
+
+input AddProductInput{
+    id:String
+    name:String!
+    description:String!
+    quantity:Int!
+    price:Float!
+    image:String!
+    onSale:Boolean!
+    categoryId: String!
 }
 
 `
